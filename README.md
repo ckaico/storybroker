@@ -24,7 +24,7 @@ Requires Node 20 or later.
 **Claude Code**
 
 ```bash
-claude mcp add storybroker -- npx -y storybroker-mcp
+claude mcp add storybroker -- npx -y storybroker
 ```
 
 **Claude Desktop** (`claude_desktop_config.json`)
@@ -32,7 +32,7 @@ claude mcp add storybroker -- npx -y storybroker-mcp
 ```json
 {
   "mcpServers": {
-    "storybroker": { "command": "npx", "args": ["-y", "storybroker-mcp"] }
+    "storybroker": { "command": "npx", "args": ["-y", "storybroker"] }
   }
 }
 ```
@@ -41,7 +41,7 @@ claude mcp add storybroker -- npx -y storybroker-mcp
 
 ```bash
 bun install && bun run build
-claude mcp add storybroker -- node /absolute/path/to/storybroker-mcp/dist/index.js
+claude mcp add storybroker -- node /absolute/path/to/storybroker/dist/index.js
 ```
 
 **The skill (recommended).** Copy `skill/` to `~/.claude/skills/storybroker/` so Claude follows the rights-mapping workflow and its rules.
