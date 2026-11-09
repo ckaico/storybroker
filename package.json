@@ -10,7 +10,7 @@
   "bin": {
     "storybroker-mcp": "dist/index.js"
   },
-  "files": ["dist", "skill", "README.md"],
+  "files": ["dist", "skill", "README.md", "NOTICE"],
   "engines": {
     "node": ">=20"
   },

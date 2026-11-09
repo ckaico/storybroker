@@ -102,4 +102,4 @@ bun run test       # end-to-end test over stdio against the example project
 
 ## License
 
-Code: [Apache License 2.0](LICENSE). The license covers the code only. "StoryBroker" and the StoryBroker logo are not licensed for use in forks or derivative products.
+Copyright 2026 Christian Kai. Code: [Apache License 2.0](LICENSE); see [NOTICE](NOTICE). The license covers the code only. "StoryBroker" and the StoryBroker logo are not licensed for use in forks or derivative products.
