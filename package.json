@@ -1,7 +1,7 @@
 {
   "name": "storybroker",
   "version": "0.1.0",
-  "description": "Every story has a paper trail. StoryBroker reads it: who owns what, what is blocking release, and who has to say yes. MCP server for Claude.",
+  "description": "Every story has a paper trail. StoryBroker turns it into a deal. Who owns what, what is blocking release, and who has to say yes, packaged for your attorney, a buyer or a distributor. MCP server for Claude.",
   "license": "Apache-2.0",
   "homepage": "https://www.story.broker",
   "repository": { "type": "git", "url": "git+https://github.com/ckaico/storybroker.git" },

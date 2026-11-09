@@ -1,7 +1,7 @@
 # StoryBroker
 
-**Every story has a paper trail. StoryBroker reads it.**
-Who owns what, what’s blocking release, and exactly who has to say yes. For filmmakers, rights holders and the attorneys who untangle them.
+**Every story has a paper trail. StoryBroker turns it into a deal.**
+Who owns what, what’s blocking release, and who has to say yes, packaged for your attorney, a buyer or a distributor.
 
 [www.story.broker](https://www.story.broker)
 
