@@ -1,7 +1,7 @@
 {
   "name": "storybroker",
   "version": "0.1.0",
-  "description": "Map the rights in a film or story project folder and get it ready to release, re-release or sell. An MCP server.",
+  "description": "Every story has a paper trail. StoryBroker reads it: who owns what, what is blocking release, and who has to say yes. MCP server for Claude.",
   "license": "Apache-2.0",
   "homepage": "https://www.story.broker",
   "repository": { "type": "git", "url": "git+https://github.com/ckaico/storybroker.git" },

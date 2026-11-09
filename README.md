@@ -1,7 +1,7 @@
-# StoryBroker MCP
+# StoryBroker
 
-**Bring the whole folder. Get a rights map.**
-Know who owns what in your film or story, what's missing, and what it takes to release, re-release or sell it.
+**Every story has a paper trail. StoryBroker reads it.**
+Who owns what, what’s blocking release, and exactly who has to say yes. For filmmakers, rights holders and the attorneys who untangle them.
 
 [www.story.broker](https://www.story.broker)
 
