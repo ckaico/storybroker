@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { evaluate, warningsFor } from "./checklists.js";
+import { pitchGaps, pitchHtml, pitchMarkdown } from "./pitch.js";
 import { workdir } from "./project.js";
 import type { Goal, Manifest, Right, Source } from "./types.js";
 
@@ -110,14 +111,36 @@ export async function exportPackage(root: string, m: Manifest, goal: Goal) {
 
   const manifest = { ...m, readiness: { goal, verdict: result.verdict, tally: result.tally, items: result.results }, disclaimer: DISCLAIMER };
 
-  const files: Record<string, string> = {
+  const files: Record<string, string> = {};
+  if (m.pitch) {
+    files["PITCH.html"] = pitchHtml(m, goal);
+    files["PITCH.md"] = pitchMarkdown(m, goal);
+  }
+  Object.assign(files, {
     "RIGHTS_REPORT.md": report,
     "OPEN_QUESTIONS.md": questions,
     "DOCUMENT_INDEX.csv": csv,
     "rights-manifest.json": JSON.stringify(manifest, null, 2),
-  };
+  });
+  const gaps = pitchGaps(m.pitch);
+  files["README.md"] = [
+    `# ${m.project.name}: deal package`,
+    "",
+    `Goal: ${goal} · Rights verdict: ${result.verdict} · Generated ${new Date().toISOString().slice(0, 10)}`,
+    "",
+    m.pitch ? "- **PITCH.html**: one-page pitch for a buyer or distributor. Opens in any browser, prints cleanly." : "- No pitch yet.",
+    m.pitch ? "- **PITCH.md**: the same pitch as text." : null,
+    "- **RIGHTS_REPORT.md**: who owns what, what's blocking, what to do next. For your attorney.",
+    "- **OPEN_QUESTIONS.md**: questions grouped by who to ask.",
+    "- **DOCUMENT_INDEX.csv**: every document reviewed.",
+    "- **rights-manifest.json**: the full rights map, machine-readable.",
+    "",
+    gaps.length ? "## Before you send the pitch\n\n" + gaps.map((g) => `- ${g}`).join("\n") + "\n" : null,
+    `> ${DISCLAIMER}`,
+    "",
+  ].filter((l) => l !== null).join("\n");
   for (const [name, body] of Object.entries(files)) await fs.writeFile(path.join(out, name), body);
-  return { dir: out, files: Object.keys(files), verdict: result.verdict, steps };
+  return { dir: out, files: Object.keys(files), verdict: result.verdict, steps, pitchGaps: gaps };
 }
 
 export function summarizeRight(r: Right) {

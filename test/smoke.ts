@@ -41,7 +41,7 @@ const call = async (name: string, args: Record<string, unknown>) => {
 };
 
 const tools = (await client.listTools()).tools.map((t) => t.name);
-check(tools.length === 8, `8 tools: ${tools.join(", ")}`);
+check(tools.length === 9, `9 tools: ${tools.join(", ")}`);
 
 const open = await call("open_project", { path: proj, name: "The Lantern Keeper", goal: "rerelease" });
 check(!open.isError && /24 files/.test(open.text), "open_project scans 24 files");
@@ -94,9 +94,32 @@ check(/## music sync/.test(map.text) && /Ferris Wheel Blues/.test(map.text), "ri
 const ready = await call("readiness_check", { goal: "rerelease" });
 check(/Not ready/.test(ready.text) && /BLOCKED/.test(ready.text) && /MISSING/.test(ready.text), "readiness_check says Not ready with blocked and missing items");
 
+const draft = await call("record_pitch", {
+  title: "The Lantern Keeper",
+  logline: "On a fog-bound island where the lighthouse has gone dark, an eleven-year-old girl learns to keep the lantern lit and finds out why the fog keeps coming back.",
+  format: "Animated feature",
+  status: "Completed 2009 · off every platform since 2019",
+  hook: "A finished, loved film nobody can watch, and <b>the paper trail</b> that explains why.",
+  synopsis: "Wren arrives on Gull Island to live with Old Tamsin.\n\nWhen the lantern goes out, the fog comes for the town.",
+  comps: [{ title: "Example Comp", why: "hand-painted animation, family audience" }],
+  offer: { type: "rerelease_partner", summary: "Partner on a restored re-release once the rights blockers are cleared." },
+});
+check(!draft.isError && /Not yet approved/.test(draft.text) && /No contact line/.test(draft.text), "record_pitch saves draft and lists what's missing");
+const appr = await call("record_pitch", { contact: "Producer, contact on request", approved: true });
+check(/complete and approved/.test(appr.text) && /The Lantern Keeper/.test(appr.text), "record_pitch merges fields and approves");
+const edit = await call("record_pitch", { hook: "A finished film nobody can watch." });
+check(/Not yet approved/.test(edit.text), "editing the pitch copy clears approval");
+await call("record_pitch", { approved: true });
+
 const exp = await call("export_package", {});
 const out = path.join(proj, ".storybroker/out");
-check(["RIGHTS_REPORT.md", "OPEN_QUESTIONS.md", "DOCUMENT_INDEX.csv", "rights-manifest.json"].every((f) => existsSync(path.join(out, f))), "export_package writes 4 files");
+check(["PITCH.html", "PITCH.md", "README.md", "RIGHTS_REPORT.md", "OPEN_QUESTIONS.md", "DOCUMENT_INDEX.csv", "rights-manifest.json"].every((f) => existsSync(path.join(out, f))), "export_package writes 7 files including the pitch");
+const html = readFileSync(path.join(out, "PITCH.html"), "utf8");
+check(/Rights at a glance/.test(html) && /Not ready/.test(html) && /Re-release partner/.test(html), "PITCH.html carries the rights verdict and the offer");
+await call("record_pitch", { hook: "<script>alert(1)</script>", approved: true });
+await call("export_package", {});
+const html2 = readFileSync(path.join(out, "PITCH.html"), "utf8");
+check(!/<script>/.test(html2) && /&lt;script&gt;/.test(html2) && /default-src 'none'/.test(html2), "PITCH.html escapes content and blocks scripts");
 const report = readFileSync(path.join(out, "RIGHTS_REPORT.md"), "utf8");
 check(/not legal advice/.test(report) && /What to do next/.test(report), "report has disclaimer and next steps");
 check(JSON.parse(readFileSync(path.join(out, "rights-manifest.json"), "utf8")).readiness.verdict === "Not ready", "manifest JSON carries verdict");

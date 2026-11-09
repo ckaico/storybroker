@@ -120,4 +120,34 @@ export interface Manifest {
   rights: Right[];
   assets: Asset[];
   questions: Question[];
+  pitch?: Pitch;
+}
+
+export const OFFER_TYPES = ["option", "purchase", "license", "distribution", "rerelease_partner", "co_production", "financing", "collaboration", "other"] as const;
+export type OfferType = (typeof OFFER_TYPES)[number];
+
+export interface Comp {
+  title: string;
+  year?: string;
+  why: string;            // what this title shares with ours: tone, audience, structure, market
+}
+
+export interface Pitch {
+  title: string;
+  logline: string;
+  format?: string;        // e.g. "Animated feature, 88 min" or "Limited series, 6 x 45"
+  genre?: string;
+  status?: string;        // e.g. "Completed 2009, out of distribution since 2019"
+  synopsis?: string;      // one to three short paragraphs
+  hook?: string;          // why this story, the thing a buyer will repeat in the room
+  whyNow?: string;
+  audience?: string;
+  comps?: Comp[];
+  assets?: string[];      // what a buyer gets: masters, script, bible, audience data, footage
+  team?: { name: string; role: string }[];
+  offer?: { type: OfferType; summary: string };  // what is on the table
+  contact?: string;       // name and email or phone, only if the user supplies it
+  sources?: Source[];
+  approved?: boolean;     // the user has read and approved this copy
+  updatedAt?: string;
 }

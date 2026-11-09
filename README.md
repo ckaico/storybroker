@@ -59,6 +59,8 @@ Claude opens the folder, reads the documents, records each right with a quoted s
 the-lantern-keeper/.storybroker/
   manifest.json            everything recorded so far (re-running keeps it)
   text/                    extracted text of each document
+  out/PITCH.html           one-page pitch for a buyer or distributor, with rights at a glance
+  out/PITCH.md             the same pitch as text
   out/RIGHTS_REPORT.md     summary, next steps, readiness checklist, rights map, document index
   out/OPEN_QUESTIONS.md    questions grouped by who to ask
   out/DOCUMENT_INDEX.csv
@@ -76,7 +78,8 @@ the-lantern-keeper/.storybroker/
 | `record_findings` | Adds or updates parties, rights, assets and open questions. Each right cites a document and a quote. |
 | `rights_map` | Shows every right by category with holder, status, media, territory, term, warnings and sources. |
 | `readiness_check` | Scores the map against the checklist for `release`, `rerelease` or `sale`: each item is ready, review, blocked or missing. |
-| `export_package` | Writes the report, open questions, document index and JSON manifest. |
+| `record_pitch` | Saves the one-page pitch: logline, hook, synopsis, why now, audience, comps, what's available, team, the offer and contact. Any edit needs your sign-off again. |
+| `export_package` | Writes the deal package: `PITCH.html` (one-page pitch with the rights verdict attached), the rights report, open questions, document index and JSON manifest. |
 
 Statuses: `cleared`, `partial`, `unknown`, `gap`, `expired`, `disputed`. StoryBroker also flags rights that expired, licenses whose media don't cover streaming, rights with no cited source, and transfers that pass through a bankruptcy.
 
